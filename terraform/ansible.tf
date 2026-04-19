@@ -6,13 +6,14 @@ ${ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/mykey.pem
 %{ endfor ~}
 EOT
 
-  filename = "../../ansible/inventory/inventory.ini"
+  filename = "${path.module}/../ansible/inventory/inventory.ini"  # ← Use path.module
 }
 
 resource "null_resource" "run_ansible" {
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../../ansible/inventory/inventory.ini ../../ansible/playbooks/install_apache_php.yml"
+    # Use absolute path from current working directory
+    command = "cd ${path.module}/../ && ansible-playbook -i ansible/inventory/inventory.ini ansible/playbooks/install_apache_php.yml"
   }
 
   depends_on = [

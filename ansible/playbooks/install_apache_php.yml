@@ -1,5 +1,5 @@
 - name: Install and Configure Apache and PHP
-  hosts: web_servers
+  hosts: web
   become: yes
 
   tasks:
